@@ -1,6 +1,6 @@
 # Exported from:        http://esenkus-Precision-5480:5516/
 # Release version:      24.1.0
-# Date created:         Mon May 26 15:01:49 EEST 2025
+# Date created:         Mon May 26 15:39:27 EEST 2025
 
 ---
 apiVersion: xl-release/v1
@@ -9,6 +9,33 @@ metadata:
   path: /
   home: Version_stuff
 spec:
+- name: DEV
+  type: xlrelease.Environment
+  correlationUid: 067c90c4-aa9f-4096-b57b-b88b82622532
+  description: "Target: http://localhost:4516/#/explorer?ciId=Environments/Acme-Backend/DEV"
+  stage: Unknown
+  deploymentTarget:
+    type: deploy.DeploymentTarget
+    targetUrl: http://localhost:4516/#/explorer?ciId=Environments/Acme-Backend/DEV
+    environmentPath: "[DEV](http://localhost:4516/#/explorer?ciId=Environments/Acme-Backend/DEV)"
+- name: PROD
+  type: xlrelease.Environment
+  correlationUid: 7f1f49b6-43da-4431-83de-a0bc0d8c0f28
+  description: "Target: http://localhost:4516/#/explorer?ciId=Environments/Acme-Backend/PROD"
+  stage: Unknown
+  deploymentTarget:
+    type: deploy.DeploymentTarget
+    targetUrl: http://localhost:4516/#/explorer?ciId=Environments/Acme-Backend/PROD
+    environmentPath: "[PROD](http://localhost:4516/#/explorer?ciId=Environments/Acme-Backend/PROD)"
+- name: TEST
+  type: xlrelease.Environment
+  correlationUid: 3fcbf13b-2ab2-4043-b81a-55c9ee501ad2
+  description: "Target: http://localhost:4516/#/explorer?ciId=Environments/Acme-Backend/TEST"
+  stage: Unknown
+  deploymentTarget:
+    type: deploy.DeploymentTarget
+    targetUrl: http://localhost:4516/#/explorer?ciId=Environments/Acme-Backend/TEST
+    environmentPath: "[TEST](http://localhost:4516/#/explorer?ciId=Environments/Acme-Backend/TEST)"
 - name: test env
   type: xlrelease.Environment
   stage: Development

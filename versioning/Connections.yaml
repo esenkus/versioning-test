@@ -1,0 +1,31 @@
+# Exported from:        http://esenkus-Precision-5480:5516/
+# Release version:      24.1.0
+# Date created:         Mon May 26 15:39:27 EEST 2025
+
+---
+apiVersion: xl-release/v1
+kind: Templates
+metadata:
+  path: /
+  home: Version_stuff
+spec:
+- name: Deploy serveru - Webhook
+  type: events.PostWebhookEndpoint
+  path: path-8a23edbe-51f7-4806-990c-fa1c95cb9a94
+  authentication:
+    type: events.NoAuthentication
+- name: Deploy serveru deployments
+  type: deploy.DeploymentConfig
+  application: Applications/.*
+  environment: Environments/.*
+- name: Deploy serveru
+  type: digitalai.DeployServer
+  url: http://localhost:4516
+  username: admin
+  password: !value "digitalai_DeployServer_Deploy_serveru_password"
+- name: Deploy serveru - Event source
+  type: deploy.StatusWebhookEventSource
+  eventSource: Deploy serveru - Webhook
+  sourceServer: Deploy serveru
+  liveDeploymentConfigs:
+  - Deploy serveru deployments
