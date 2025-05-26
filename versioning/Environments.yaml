@@ -1,0 +1,14 @@
+# Exported from:        http://esenkus-Precision-5480:5516/
+# Release version:      24.1.0
+# Date created:         Mon May 26 15:01:49 EEST 2025
+
+---
+apiVersion: xl-release/v1
+kind: Environments
+metadata:
+  path: /
+  home: Version_stuff
+spec:
+- name: test env
+  type: xlrelease.Environment
+  stage: Development
