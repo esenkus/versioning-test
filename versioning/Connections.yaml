@@ -1,6 +1,6 @@
 # Exported from:        http://esenkus-Precision-5480:5516/
 # Release version:      24.1.0
-# Date created:         Thu May 29 15:23:10 EEST 2025
+# Date created:         Fri May 30 10:17:11 EEST 2025
 
 ---
 apiVersion: xl-release/v1
@@ -9,20 +9,51 @@ metadata:
   path: /
   home: Version_stuff
 spec:
+- name: ArgoCD API Server - Webhook
+  type: events.PostWebhookEndpoint
+  path: path-8e47a6bb-40f4-4acb-8e32-3800fef7dee0
+  authentication:
+    type: events.NoAuthentication
+- name: FluxCD API Server - Webhook
+  type: events.PostWebhookEndpoint
+  path: path-87644fcc-d2d0-466b-b581-4adf7c0fb770
+  authentication:
+    type: events.NoAuthentication
 - name: HTTP Endpoint for Deploy
   type: events.PostWebhookEndpoint
   path: path-8a23edbe-51f7-4806-990c-fa1c95cb9a94
   authentication:
     type: events.NoAuthentication
+- name: ArgoCD API Server deployments
+  type: argocd.DeploymentConfig
 - name: Live Deployments config for Deploy
   type: deploy.DeploymentConfig
   application: Applications/.*
   environment: Environments/.*
+- name: FluxCD API Server deployments
+  type: fluxcd.DeploymentConfig
+  kind: All Kinds
+  namespace:
+  - capacitor
+  - nginx
+  - podinfo
+- name: ArgoCD API Server
+  type: argocd.APIServer
+  url: https://localhost:8080
+  username: admin
+  password: !value "argocd_APIServer_ArgoCD_API_Server_password"
 - name: API Server Deploy
   type: digitalai.DeployServer
   url: http://localhost:4516
   username: admin
   password: !value "digitalai_DeployServer_API_Server_Deploy_password"
+- name: FluxCD API Server
+  type: fluxcd.APIServer
+  url: https://host.k3d.internal:40005
+  fluxcdAuthenticationMethod: Client Certificate
+  clientCrt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJrVENDQVRlZ0F3SUJBZ0lJZnl0WUkxUUpBcXd3Q2dZSUtvWkl6ajBFQXdJd0l6RWhNQjhHQTFVRUF3d1kKYXpOekxXTnNhV1Z1ZEMxallVQXhOelEwT1RZeU9UQTVNQjRYRFRJMU1EUXhPREEzTlRVd09Wb1hEVEkyTURReApPREEzTlRVd09Wb3dNREVYTUJVR0ExVUVDaE1PYzNsemRHVnRPbTFoYzNSbGNuTXhGVEFUQmdOVkJBTVRESE41CmMzUmxiVHBoWkcxcGJqQlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJNa01aaUhJeDk2RzVBWDUKdDQ3ZGMvYjVod2wrbEZTZzMwc21rNjZsVGxyeU0zMGRXYUJQMTFvUUZmdFFuRHNGdEFTMWJGRWx6cjlTMXh3bQoyalhna2oralNEQkdNQTRHQTFVZER3RUIvd1FFQXdJRm9EQVRCZ05WSFNVRUREQUtCZ2dyQmdFRkJRY0RBakFmCkJnTlZIU01FR0RBV2dCUXVyd2pGSld3TTQ5RUlUSWFpQkVramtqSWpBREFLQmdncWhrak9QUVFEQWdOSUFEQkYKQWlCOVVGQ0grLzk4MkdEZk8rMkdQVkVqYmFsSWlCMDZQcGExa0ZCUnA4bWFPQUloQU5TWXlBOFRHTWNkUFVVTgpKVkZzL292TGhmQVlTeVB0VUg2cVFjTlNUNFpwCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0KLS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJkekNDQVIyZ0F3SUJBZ0lCQURBS0JnZ3Foa2pPUFFRREFqQWpNU0V3SHdZRFZRUUREQmhyTTNNdFkyeHAKWlc1MExXTmhRREUzTkRRNU5qSTVNRGt3SGhjTk1qVXdOREU0TURjMU5UQTVXaGNOTXpVd05ERTJNRGMxTlRBNQpXakFqTVNFd0h3WURWUVFEREJock0zTXRZMnhwWlc1MExXTmhRREUzTkRRNU5qSTVNRGt3V1RBVEJnY3Foa2pPClBRSUJCZ2dxaGtqT1BRTUJCd05DQUFRNmxlN0srZXhlaHkxdFhPa3JsQlZVcXBiREdOdjYzcTJYZm1NL3BUV1UKVlhFTW1EUXN4SVRFaklPUmFZZ3hlaWwwMi9VSHVPcUo2bStEbEZyZjJXbVdvMEl3UURBT0JnTlZIUThCQWY4RQpCQU1DQXFRd0R3WURWUjBUQVFIL0JBVXdBd0VCL3pBZEJnTlZIUTRFRmdRVUxxOEl4U1ZzRE9QUkNFeUdvZ1JKCkk1SXlJd0F3Q2dZSUtvWkl6ajBFQXdJRFNBQXdSUUlnSDkzSGxvVU0vMENkRGVKUG9maVRGams2MzQ0VEtnWVMKS1NlbWR3aWZlUzhDSVFESlNQdVlEL1k0R0J3TWc3WTJVMW40Q0tON3E0dW1pbHhEbmdmRWcvM1ByQT09Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+  clientKey: LS0tLS1CRUdJTiBFQyBQUklWQVRFIEtFWS0tLS0tCk1IY0NBUUVFSUJ4bVpwYWZudlN2R0dZczFKR3pwaDZweXZSWHVoczNXZitaek9rK0QvY21vQW9HQ0NxR1NNNDkKQXdFSG9VUURRZ0FFeVF4bUljakgzb2JrQmZtM2p0MXo5dm1IQ1g2VVZLRGZTeWFUcnFWT1d2SXpmUjFab0UvWApXaEFWKzFDY093VzBCTFZzVVNYT3YxTFhIQ2JhTmVDU1B3PT0KLS0tLS1FTkQgRUMgUFJJVkFURSBLRVktLS0tLQo=
+  insecure: true
 - name: Flux Git Repo
   type: fluxcd.GitConfig
   username: esenkus
@@ -32,9 +63,21 @@ spec:
   committerUsername: esenkus
   branch: main
   path: clusters/my-cluster
+- name: ArgoCD API Server - Event source
+  type: argo.StatusWebhookEventSource
+  eventSource: ArgoCD API Server - Webhook
+  sourceServer: ArgoCD API Server
+  liveDeploymentConfigs:
+  - ArgoCD API Server deployments
 - name: Webhook Source for Deploy
   type: deploy.StatusWebhookEventSource
   eventSource: HTTP Endpoint for Deploy
   sourceServer: API Server Deploy
   liveDeploymentConfigs:
   - Live Deployments config for Deploy
+- name: FluxCD API Server - Event source
+  type: fluxcd.StatusWebhookEventSource
+  eventSource: FluxCD API Server - Webhook
+  sourceServer: FluxCD API Server
+  liveDeploymentConfigs:
+  - FluxCD API Server deployments

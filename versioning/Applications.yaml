@@ -1,6 +1,6 @@
 # Exported from:        http://esenkus-Precision-5480:5516/
 # Release version:      24.1.0
-# Date created:         Thu May 29 15:23:10 EEST 2025
+# Date created:         Fri May 30 10:17:11 EEST 2025
 
 ---
 apiVersion: xl-release/v1
@@ -18,7 +18,42 @@ spec:
     applicationPath: "[Acme-Backend](http://localhost:4516/#/explorer?ciId=Applications/Users/me/Acme-Backend)"
   environments:
   - TEST
+- name: nginx:nginx
+  type: xlrelease.Application
+  correlationUid: a1f74d40-2ce7-4448-b9e2-5e875e105e59
+  applicationSource:
+    type: fluxcd.ApplicationSource
+    serverUrl: https://github.com/bitnami/charts/tree/main/bitnami/nginx
+    applicationRepository: "[Bitnami repository](https://github.com/bitnami/charts/tree/main/bitnami/nginx)"
+    applicationPath: nginx
+    kind: HelmRepository
+    targetRevision: "[15.14.2](https://hub.docker.com/r/bitnamicharts/nginx/tags?name=15.14.2)"
+  environments:
+  - nginx
+- name: podinfo:podinfo
+  type: xlrelease.Application
+  correlationUid: 4239b408-ff2d-451c-a3bd-c1f2275d6419
+  applicationSource:
+    type: fluxcd.ApplicationSource
+    serverUrl: https://github.com/stefanprodan/podinfo
+    applicationRepository: "[https://github.com/stefanprodan/podinfo](https://github.com/stefanprodan/podinfo)"
+    applicationPath: kustomize
+    kind: GitRepository
+    targetRevision: master@sha1:fb3b01be
+  environments:
+  - podinfo
 - name: test app
   type: xlrelease.Application
   environments:
   - test env
+- name: test-web-app:team1
+  type: xlrelease.Application
+  correlationUid: "test-web-app:[https://kubernetes.default.svc]"
+  applicationSource:
+    type: argocd.ApplicationSource
+    serverUrl: https://github.com/esenkus/test-web-app
+    repository: https://github.com/esenkus/test-web-app
+    targetRevision: "[HEAD](https://github.com/esenkus/test-web-app/tree/HEAD)"
+    path: "[deploy](https://github.com/esenkus/test-web-app/tree/HEAD/deploy)"
+  environments:
+  - "team1 [7178ab]"
