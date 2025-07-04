@@ -1,6 +1,6 @@
 # Exported from:        http://host.k3d.internal:5516/
 # Release version:      24.1.0
-# Date created:         Fri Jul 04 15:05:51 EEST 2025
+# Date created:         Fri Jul 04 15:14:02 EEST 2025
 
 ---
 apiVersion: xl-release/v1
@@ -9,6 +9,15 @@ metadata:
   path: /
   home: simple_versioning
 spec:
+- name: Acme-Backend
+  type: xlrelease.Application
+  correlationUid: 87b6f6ce-c2c0-4d28-8f0c-73f966b84ecb
+  applicationSource:
+    type: deploy.ApplicationSource
+    serverUrl: http://host.k3d.internal:4516
+    applicationPath: "[Acme-Backend](http://host.k3d.internal:4516/#/explorer?ciId=Applications/Users/me/Acme-Backend)"
+  environments:
+  - TEST
 - name: test_app
   type: xlrelease.Application
   environments:

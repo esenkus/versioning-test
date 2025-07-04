@@ -1,0 +1,31 @@
+# Exported from:        http://host.k3d.internal:5516/
+# Release version:      24.1.0
+# Date created:         Fri Jul 04 15:14:02 EEST 2025
+
+---
+apiVersion: xl-release/v1
+kind: Templates
+metadata:
+  path: /
+  home: simple_versioning
+spec:
+- name: deploy - Webhook
+  type: events.PostWebhookEndpoint
+  path: path-25c7e109-3b76-455a-89de-5bc11fe0299f
+  authentication:
+    type: events.NoAuthentication
+- name: deploy deployments
+  type: deploy.DeploymentConfig
+  application: Applications/.*
+  environment: Environments/.*
+- name: deploy
+  type: digitalai.DeployServer
+  url: http://host.k3d.internal:4516
+  username: admin
+  password: !value "digitalai_DeployServer_deploy_password"
+- name: deploy - Event source
+  type: deploy.StatusWebhookEventSource
+  eventSource: deploy - Webhook
+  sourceServer: deploy
+  liveDeploymentConfigs:
+  - deploy deployments
